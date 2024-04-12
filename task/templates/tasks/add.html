@@ -6,10 +6,11 @@
 </head>
 
 <body>
-    <form>
+    <form action="{% url 'task:add' %}" method="post">
+        {% csrf_token %}
        <h2>add tasks</h2>
-        <input type="text" name="task">
+        {{ form }}
         <input type="submit">
     </form>
-    <a href="{% url 'index' %}"> View Tasks </a>
+    <a href="{% url 'task:index' %}"> View Tasks </a>
 </body>
