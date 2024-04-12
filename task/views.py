@@ -12,8 +12,11 @@ class NewTaskForm(forms.Form):
 
 # Create your views here.
 def index(request):
+    #manipulate show tasks by session user
+    if "tasks" not in request.session:
+        request.session["tasks"] = []
     return render(request, "tasks/index.html",{
-        "tasks": tasks,
+        "tasks": request.session["tasks"]
     })
 
 def add(request):
@@ -22,7 +25,8 @@ def add(request):
         if form.is_valid():
             form.cleaned_data
             task = form.cleaned_data["tasks"]
-            tasks.append(task)
+            #manage task by sessions
+            request.session["tasks"] += [task]
             return HttpResponseRedirect(reverse("task:index"))
         
         else:
